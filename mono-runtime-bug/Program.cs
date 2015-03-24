@@ -108,7 +108,7 @@ namespace mono_runtime_bug
             if (AppDomain.CurrentDomain.IsDefaultAppDomain())
             {
                 // RazorEngine cannot clean up from the default appdomain...
-                Console.WriteLine("Switching to second AppDomain, for RazorEngine...");
+                Console.WriteLine("Switching to second AppDomain...");
                 var domain = CreateDomain("MyMainDomain");
                 var exitCode = domain.ExecuteAssembly(Assembly.GetExecutingAssembly().Location, new[] { "init" });
 
