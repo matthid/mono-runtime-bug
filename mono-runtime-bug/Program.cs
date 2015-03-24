@@ -70,13 +70,13 @@ namespace mono_runtime_bug
             void appDomain_DomainUnload(object sender, EventArgs e)
             {
                 Console.WriteLine("Notice AppDomain.DomainUnload...");
-                // var started = new ManualResetEvent(false);
+                var started = new ManualResetEvent(false);
                 AppDomain other = (AppDomain)sender;
                 var t = new Thread(() =>
                 {
                     try
                     {
-                        //started.Set();
+                        started.Set();
                         Console.WriteLine("Waiting for Shutdown");
                         while (!IsUnloaded(other))
                         {
@@ -99,7 +99,7 @@ namespace mono_runtime_bug
                 });
                 t.IsBackground = false;
                 t.Start();
-                //started.WaitOne(Timeout.Infinite);
+                started.WaitOne(Timeout.Infinite);
             }
         }
 
@@ -108,11 +108,11 @@ namespace mono_runtime_bug
             if (AppDomain.CurrentDomain.IsDefaultAppDomain())
             {
                 // RazorEngine cannot clean up from the default appdomain...
-                Console.WriteLine("Switching to secound AppDomain, for RazorEngine...");
+                Console.WriteLine("Switching to second AppDomain, for RazorEngine...");
                 var domain = CreateDomain("MyMainDomain");
                 var exitCode = domain.ExecuteAssembly(Assembly.GetExecutingAssembly().Location, new[] { "init" });
 
-                Console.WriteLine("unload secound AppDomain");
+                Console.WriteLine("unload second AppDomain");
                 AppDomain.Unload(domain);
                 return;
             }
@@ -124,7 +124,7 @@ namespace mono_runtime_bug
 
             Console.WriteLine("Waiting for exit.");
             Thread.Sleep(1000);
-            Console.WriteLine("Finish work of secound AppDomain");
+            Console.WriteLine("Finish work of second AppDomain");
         }
     }
 }
