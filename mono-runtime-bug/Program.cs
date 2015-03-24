@@ -69,9 +69,14 @@ namespace mono_runtime_bug
 
             void appDomain_DomainUnload(object sender, EventArgs e)
             {
-                Thread.Sleep(500);
+                Action<string> ignore = z => { };
+                AppDomain senderDomain = (AppDomain)sender;
+                for (int i = 0; i < 10000; i++)
+                {
+                    ignore(senderDomain.FriendlyName);
+                }
                 Console.WriteLine("Notice AppDomain.DomainUnload {0}, current: {1}...", 
-                    ((AppDomain)sender).FriendlyName, AppDomain.CurrentDomain.FriendlyName);
+                    senderDomain.FriendlyName, AppDomain.CurrentDomain.FriendlyName);
                 var started = new ManualResetEvent(false);
                 AppDomain other = (AppDomain)sender;
                 var t = new Thread(() =>
