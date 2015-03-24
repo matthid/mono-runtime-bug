@@ -1,0 +1,10 @@
+language: csharp
+
+sudo: false
+
+script: 
+  - ./build.sh
+  
+branches:
+  except:
+    - gh-pages

@@ -83,7 +83,7 @@ namespace mono_runtime_bug
                             Thread.Sleep(100);
                         }
                         Console.WriteLine("AppDomain unloaded");
-                        Thread.Sleep(10000);
+                        Thread.Sleep(1000);
                         Console.WriteLine("Work finished.");
                     }
                     catch (Exception exn)
