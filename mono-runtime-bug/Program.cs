@@ -55,7 +55,6 @@ namespace mono_runtime_bug
             }
             catch (AppDomainUnloadedException)
             {
-                Console.WriteLine("AppDomainUnloadedException");
                 return true;
             }
         }
@@ -88,6 +87,13 @@ namespace mono_runtime_bug
                         while (!IsUnloaded(other))
                         {
                             Thread.Sleep(100);
+                        }
+                        for (int i = 0; i < 10000; i++)
+                        {
+                            if (!IsUnloaded(other))
+                            {
+                                Console.WriteLine ("FAILED!");
+                            }
                         }
                         Console.WriteLine("AppDomain unloaded");
                         Thread.Sleep(1000);
