@@ -91,12 +91,6 @@ namespace mono_runtime_bug
                     {
                         Console.WriteLine("FAILED: {0}", exn);
                     }
-
-                    for (int i = 1; i <= 10; i++)
-                    {
-                        Thread.Sleep(100);
-                        Console.WriteLine("Test {0}", i);
-                    }
                 });
                 t.IsBackground = false;
                 t.Start();
