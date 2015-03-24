@@ -70,13 +70,13 @@ namespace mono_runtime_bug
             void appDomain_DomainUnload(object sender, EventArgs e)
             {
                 Console.WriteLine("Notice AppDomain.DomainUnload...");
-                var started = new ManualResetEvent(false);
+                // var started = new ManualResetEvent(false);
                 AppDomain other = (AppDomain)sender;
                 var t = new Thread(() =>
                 {
                     try
                     {
-                        started.Set();
+                        //started.Set();
                         Console.WriteLine("Waiting for Shutdown");
                         while (!IsUnloaded(other))
                         {
@@ -99,7 +99,7 @@ namespace mono_runtime_bug
                 });
                 t.IsBackground = false;
                 t.Start();
-                started.WaitOne(Timeout.Infinite);
+                //started.WaitOne(Timeout.Infinite);
             }
         }
 
